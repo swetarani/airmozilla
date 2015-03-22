@@ -24,7 +24,13 @@ Calendar | {{ super() }}
   {% endcompress %}
 {% endblock %}
 
-
+{% block extra_head %}
+{{ super() }}
+<meta property="og:title" content="Calendar | Air Mozilla | Mozilla, in Video">
+<meta property="og:url" content="https://air.mozilla.org/calendar/">
+<meta property="og:description" content="Event Calendar in your local timezone">
+<meta property="og:image" content="https://air.cdn.mozilla.net/static/img/logo-airmo-md.png">
+{% endblock %}
 
 {% block content_main %}
   <h2 class="section-title">Calendar</h2>

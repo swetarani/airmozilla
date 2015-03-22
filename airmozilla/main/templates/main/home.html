@@ -11,7 +11,13 @@ p.feed { float: right; }
 </style>
 {% endblock %}
 
-
+{% block extra_head %}
+{{ super() }}
+<meta property="og:title" content="Air Mozilla | Mozilla, in Video">
+<meta property="og:url" content="https://air.mozilla.org/">
+<meta property="og:description" content="Air Mozilla is the Internet multimedia presence of Mozilla, with live and pre-recorded shows, interviews, news snippets, tutorial videos, and features about the Mozilla community.">
+<meta property="og:image" content="https://air.cdn.mozilla.net/static/img/logo-airmo-md.png">
+{% endblock %}
 
 {% block content_main %}
   {% if front_page %}
