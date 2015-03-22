@@ -116,7 +116,7 @@
       {% if not pending %}
       <h2 class="event-date">
         {{ event.start_time | js_date }}
-	      {% if event.is_upcoming() %}
+        {% if event.is_upcoming() %}
           {% if event.location %}
             &mdash;
             {{ event.location_time.strftime("%I:%M%p") }} in {{ event.location.name }}
@@ -139,36 +139,48 @@
       {% endif %}
       <p>{{ event.description | carefulnl2br | safe_html }}</p>
 
-      {% if tags %}
-      <p>
-        {{ _('Tags') }}:
-        {% for tag in tags %}
-          <a href="{{ url('main:home') }}?tag={{ tag | urlencode }}" class="tag">{{ tag }}</a>{% if not loop.last %}, {% endif %}
-        {% endfor %}
-      </p>
-      {% endif %}
+      <table style="width:100%">
+        <col width="30%">
+        {% if tags %}
+        <tr>
+          <td>{{ _('Tags') }}:</td>
+          <td>{% for tag in tags %}
+            <a href="{{ url('main:home') }}?tag={{ tag | urlencode }}" class="tag">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+          </td>
+        </tr>
+        {% endif %}
 
-      {% if channels %}
-      <p>
-        {{ _('Channels') }}:
-        {% for channel in channels %}
-          <a href="{{ url('main:home_channels', channel.slug) }}" class="channel">{{ channel.name }}</a>{% if not loop.last %},{% endif %}
-        {% endfor %}
-      </p>
-      {% endif %}
+        {% if channels %}
+        <tr>
+          <td>{{ _('Channels') }}:</td>
+          {% for channel in channels %}
+            <td><a href="{{ url('main:home_channels', channel.slug) }}" class="channel">{{ channel.name }}</a>{% if not loop.last %},{% endif %}</td>
+          {% endfor %}
+        </tr>
+        {% endif %}
+        
+        {% if event.call_info %}
+        <tr>
+          <td>{{ _('Call info') }}:</td> 
+          <td>{{ event.call_info }}</td>
+        </tr>
+        {% endif %}
 
+        {% if event.additional_links %}
+        <tr>
+          <td>{{ _('Additional links') }}:</td>
+          <td>{{ event.additional_links | urlize|nl2br }}</td>
+        </tr>
+        {% endif %}
 
-      {% if event.call_info %}
-        <p>{{ _('Call info') }}: {{ event.call_info }}</p>
-      {% endif %}
-      {% if event.additional_links %}
-        <p>{{ _('Additional links') }}:<br>
-          {{ event.additional_links | urlize|nl2br }}</p>
-      {% endif %}
-
-      {% if hits %}
-        <p>{{ _('Views since archived') }}: {{ thousands(hits) }}</p>
-      {% endif %}
+        {% if hits %}
+        <tr>
+          <td>{{ _('Views since archived') }}:</td>
+          <td>{{ thousands(hits) }}</td>
+        </tr>
+        {% endif %}
+      </table>
 
       {% if not pending and video and event.is_public() %}
         <p>
